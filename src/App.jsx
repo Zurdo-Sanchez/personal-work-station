@@ -1,46 +1,50 @@
-import { useDispatch, useSelector } from "react-redux";
 import {
-  loginRequest,
-  logoutRequest,
-  loginWithGoogle,
-  loginWithGitHub,
-} from "./store/actions/usersActions";
-import { useState } from "react";
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+
+import { useSelector } from "react-redux";
+import ProtectedRoute from "./routes/ ProtectedRoute";
+import { getUserSelector } from "./store/selectors/UserSelector";
+// Componentes
+import LoginContainer from "./containers/LoginContainer";
+import DashboardContainer from "./containers/DashboardContainer";
 
 function App() {
-  const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.users);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const user = useSelector(getUserSelector);
 
   return (
-    <div>
-      <h1>{user ? `Bienvenido, ${user.email}` : "Iniciar Sesión"}</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {!user ? (
-        <>
-          <input
-            type="email"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+    <Router>
+      <Routes>
+        {/* Rutas públicas */}
+        <Route
+          path="/login"
+          element={!user ? <LoginContainer /> : <Navigate to="/dashboard" />}
+        />
+        {/* <Route
+          path="/register"
+          element={!user ? <RegisterContainer /> : <Navigate to="/dashboard" />}
+        /> */}
 
-          <button onClick={() => dispatch(loginWithGoogle())}>
-            Iniciar con Google
-          </button>
-          <button onClick={() => dispatch(loginWithGitHub())}>
-            Iniciar con GitHub
-          </button>
-        </>
-      ) : (
-        <button onClick={() => dispatch(logoutRequest())}>Cerrar Sesión</button>
-      )}
-    </div>
+        {/* Rutas protegidas */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardContainer />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Ruta por defecto */}
+        <Route
+          path="*"
+          element={<Navigate to={user ? "/dashboard" : "/login"} />}
+        />
+      </Routes>
+    </Router>
   );
 }
 
