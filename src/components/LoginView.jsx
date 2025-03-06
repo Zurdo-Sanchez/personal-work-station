@@ -5,6 +5,17 @@ import {
   loginWithGitHub,
 } from "../store/actions/usersActions";
 import { useState } from "react";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  CircularProgress,
+  Container,
+  Paper,
+} from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 function LoginView() {
   const dispatch = useDispatch();
@@ -13,33 +24,83 @@ function LoginView() {
   const [password, setPassword] = useState("");
 
   return (
-    <div>
-      <h1>{user ? `Bienvenido, ${user.email}` : "Iniciar Sesión"}</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {!user ? (
-        <>
-          <input
-            type="email"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <button onClick={() => dispatch(loginWithGoogle())}>
-            Iniciar con Google
-          </button>
-          <button onClick={() => dispatch(loginWithGitHub())}>
-            Iniciar con GitHub
-          </button>
-        </>
-      ) : (
-        <button onClick={() => dispatch(logoutRequest())}>Cerrar Sesión</button>
-      )}
-    </div>
+    <Container
+      maxWidth="sm"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
+      <Paper
+        elevation={6}
+        style={{
+          padding: "2rem",
+          textAlign: "center",
+          borderRadius: "12px",
+          background: "rgba(255, 255, 255, 0.8)",
+        }}
+      >
+        <Typography variant="h4" gutterBottom>
+          {user ? `Bienvenido, ${user.email}` : "Iniciar Sesión"}
+        </Typography>
+        {error && <Typography color="error">{error}</Typography>}
+        {!user ? (
+          <>
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Email"
+              variant="outlined"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Password"
+              type="password"
+              variant="outlined"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {loading ? (
+              <CircularProgress style={{ margin: "1rem" }} />
+            ) : (
+              <>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  startIcon={<GoogleIcon />}
+                  onClick={() => dispatch(loginWithGoogle())}
+                  style={{ marginTop: "1rem" }}
+                >
+                  Iniciar con Google
+                </Button>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  startIcon={<GitHubIcon />}
+                  onClick={() => dispatch(loginWithGitHub())}
+                  style={{ marginTop: "1rem" }}
+                >
+                  Iniciar con GitHub
+                </Button>
+              </>
+            )}
+          </>
+        ) : (
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => dispatch(logoutRequest())}
+          >
+            Cerrar Sesión
+          </Button>
+        )}
+      </Paper>
+    </Container>
   );
 }
 
