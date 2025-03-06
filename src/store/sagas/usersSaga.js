@@ -26,28 +26,40 @@ import {
   logoutFailure,
   registerSuccess,
   registerFailure,
+  setLoading,
 } from "../actions/usersActions";
+import { showNotification } from "../actions/notificationsActions";
 
 // Función de registro con Email/Password
 function* handleRegister(formData) {
   try {
+    yield put(setLoading(true));
     const { email, password } = formData.payload;
-    debugger;
     const userCredential = yield call(
       createUserWithEmailAndPassword,
       auth,
       email,
       password
     );
+    debugger;
     yield put(registerSuccess(userCredential.user));
   } catch (error) {
+    debugger;
     yield put(registerFailure(error.message));
+    yield put(showNotification(error.code, "warning", 3000));
   }
 }
 
+function* handleRegisterSuccess(userCredential) {
+  debugger;
+  yield put(showNotification("auth/account-created-success", "success", 3000));
+  yield put(loginSuccess(userCredential.payload));
+}
 // Función de login con Email/Password
 function* handleLogin(action) {
   try {
+    yield put(setLoading(true));
+    debugger;
     const { email, password } = action.payload;
     const userCredential = yield call(
       signInWithEmailAndPassword,
@@ -58,6 +70,7 @@ function* handleLogin(action) {
     yield put(loginSuccess(userCredential.user));
   } catch (error) {
     yield put(loginFailure(error.message));
+    yield put(showNotification(error.code, "warning", 3000));
   }
 }
 
@@ -68,6 +81,7 @@ function* handleGoogleLogin() {
     yield put(loginSuccess(userCredential.user));
   } catch (error) {
     yield put(loginFailure(error.message));
+    yield put(showNotification(error.code, "warning", 3000));
   }
 }
 
@@ -78,6 +92,7 @@ function* handleGitHubLogin() {
     yield put(loginSuccess(userCredential.user));
   } catch (error) {
     yield put(loginFailure(error.message));
+    yield put(showNotification(error.code, "warning", 3000));
   }
 }
 
@@ -98,4 +113,5 @@ export default function* watchUsersSaga() {
   yield takeLatest(LOGIN_WITH_GOOGLE, handleGoogleLogin);
   yield takeLatest(LOGIN_WITH_GITHUB, handleGitHubLogin);
   yield takeLatest(LOGOUT_REQUEST, handleLogout);
+  yield takeLatest(REGISTER_SUCCESS, handleRegisterSuccess);
 }
