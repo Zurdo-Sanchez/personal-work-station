@@ -9,6 +9,7 @@ import darkTheme from "./themes/darkTheme";
 import customTheme from "./themes/customTheme";
 import store from "./store";
 import App from "./App";
+import Notifications from "./containers/NotificationsContainer";
 import "./i18n";
 
 function Root() {
@@ -28,6 +29,7 @@ function Root() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Notifications />
         <App />
         <div style={{ textAlign: "center", marginTop: "20px" }}>
           <Button variant="contained" color="primary" onClick={toggleTheme}>
