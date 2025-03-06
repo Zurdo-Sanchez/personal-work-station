@@ -1,25 +1,16 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import en from "./languages/en";
-import es from "./languages/es";
-import ca from "./languages/ca";
-import de from "./languages/de";
-import fr from "./languages/fr";
-import zh from "./languages/zh";
+import translations from "./languages";
 
 i18n.use(initReactI18next).init({
-  resources: {
-    en,
-    es,
-    ca,
-    de,
-    fr,
-    zh,
-  },
+  resources: Object.keys(translations).reduce((acc, lang) => {
+    acc[lang] = { translation: translations[lang] };
+    return acc;
+  }, {}),
   lng: "es", // Idioma por defecto
-  fallbackLng: "en",
+  fallbackLng: "en", // Si no encuentra un texto en el idioma actual, usa inglés
   interpolation: {
-    escapeValue: false,
+    escapeValue: false, // React ya maneja la seguridad
   },
 });
 

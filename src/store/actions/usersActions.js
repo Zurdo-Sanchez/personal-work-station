@@ -1,5 +1,11 @@
 import * as types from "./actionType/usersTypes";
 
+//set loading
+export const setLoading = (loading) => ({
+  type: types.SET_LOADING,
+  payload: loading,
+});
+
 // Email & Password Login
 export const loginRequest = (email, password) => ({
   type: types.LOGIN_REQUEST,
