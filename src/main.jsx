@@ -9,6 +9,7 @@ import darkTheme from "./themes/darkTheme";
 import customTheme from "./themes/customTheme";
 import store from "./store";
 import App from "./App";
+import "./i18n";
 
 function Root() {
   const [theme, setTheme] = useState(lightTheme);
