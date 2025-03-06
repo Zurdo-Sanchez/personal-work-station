@@ -1,5 +1,6 @@
 import { takeLatest, put, call } from "redux-saga/effects";
 import {
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -14,13 +15,35 @@ import {
   LOGOUT_FAILURE,
   LOGIN_WITH_GOOGLE,
   LOGIN_WITH_GITHUB,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
 } from "../actions/actionType/usersTypes";
 import {
   loginSuccess,
   loginFailure,
   logoutSuccess,
   logoutFailure,
+  registerSuccess,
+  registerFailure,
 } from "../actions/usersActions";
+
+// Función de registro con Email/Password
+function* handleRegister(formData) {
+  try {
+    const { email, password } = formData.payload;
+    debugger;
+    const userCredential = yield call(
+      createUserWithEmailAndPassword,
+      auth,
+      email,
+      password
+    );
+    yield put(registerSuccess(userCredential.user));
+  } catch (error) {
+    yield put(registerFailure(error.message));
+  }
+}
 
 // Función de login con Email/Password
 function* handleLogin(action) {
@@ -70,6 +93,7 @@ function* handleLogout() {
 
 // Watcher Sagas
 export default function* watchUsersSaga() {
+  yield takeLatest(REGISTER_REQUEST, handleRegister);
   yield takeLatest(LOGIN_REQUEST, handleLogin);
   yield takeLatest(LOGIN_WITH_GOOGLE, handleGoogleLogin);
   yield takeLatest(LOGIN_WITH_GITHUB, handleGitHubLogin);

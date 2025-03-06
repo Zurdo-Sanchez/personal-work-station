@@ -1,70 +1,60 @@
-import { useDispatch, useSelector } from "react-redux";
-import {
-  logoutRequest,
-  loginWithGoogle,
-  loginWithGitHub,
-} from "../store/actions/usersActions";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
-  Box,
-  Button,
-  TextField,
-  Typography,
-  CircularProgress,
   Container,
   Paper,
+  Typography,
+  TextField,
+  Button,
+  CircularProgress,
+  Box,
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import useStyles from "../styles/LoginStyles";
 
-function LoginView() {
-  const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.users);
+function LoginView({
+  loginRequest,
+  loginWithGoogle,
+  loginWithGitHub,
+  logoutRequest,
+  user,
+  loading,
+  error,
+}) {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <Container
-      maxWidth="sm"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-      }}
-    >
-      <Paper
-        elevation={6}
-        style={{
-          padding: "2rem",
-          textAlign: "center",
-          borderRadius: "12px",
-          background: "rgba(255, 255, 255, 0.8)",
-        }}
-      >
+    <Container maxWidth="sm" className={classes.loginContainer}>
+      <Paper elevation={6} className={classes.loginPaper}>
         <Typography variant="h4" gutterBottom>
-          {user ? `Bienvenido, ${user.email}` : "Iniciar Sesión"}
+          {user ? `${t("welcome")}, ${user.email}` : t("login")}
         </Typography>
         {error && <Typography color="error">{error}</Typography>}
         {!user ? (
-          <>
+          <Box className={classes.loginForm}>
             <TextField
               fullWidth
               margin="normal"
-              label="Email"
+              label={t("email")}
               variant="outlined"
               onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               fullWidth
               margin="normal"
-              label="Password"
+              label={t("password")}
               type="password"
               variant="outlined"
               onChange={(e) => setPassword(e.target.value)}
             />
             {loading ? (
-              <CircularProgress style={{ margin: "1rem" }} />
+              <CircularProgress className={classes.loadingIndicator} />
             ) : (
               <>
                 <Button
@@ -72,31 +62,41 @@ function LoginView() {
                   variant="contained"
                   color="primary"
                   startIcon={<GoogleIcon />}
-                  onClick={() => dispatch(loginWithGoogle())}
-                  style={{ marginTop: "1rem" }}
+                  onClick={loginWithGoogle} // Ahora viene del container
+                  className={classes.loginButton}
                 >
-                  Iniciar con Google
+                  {t("loginWithGoogle")}
                 </Button>
                 <Button
                   fullWidth
                   variant="contained"
                   color="secondary"
                   startIcon={<GitHubIcon />}
-                  onClick={() => dispatch(loginWithGitHub())}
-                  style={{ marginTop: "1rem" }}
+                  onClick={loginWithGitHub} // Ahora viene del container
+                  className={classes.loginButton}
                 >
-                  Iniciar con GitHub
+                  {t("loginWithGitHub")}
+                </Button>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => navigate("/register")}
+                  className={classes.registerButton}
+                >
+                  {t("goToRegister")}
                 </Button>
               </>
             )}
-          </>
+          </Box>
         ) : (
           <Button
             variant="contained"
             color="error"
-            onClick={() => dispatch(logoutRequest())}
+            onClick={logoutRequest} // Ahora viene del container
+            className={classes.loginButton}
           >
-            Cerrar Sesión
+            {t("logout")}
           </Button>
         )}
       </Paper>
