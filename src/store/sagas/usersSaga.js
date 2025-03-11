@@ -4,21 +4,10 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "../../firebase";
-import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT_REQUEST,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAILURE,
-  LOGIN_WITH_GOOGLE,
-  LOGIN_WITH_GITHUB,
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
-} from "../actions/actionType/usersTypes";
+import * as types from "../actions/actionType/usersTypes";
 import {
   loginSuccess,
   loginFailure,
@@ -26,92 +15,130 @@ import {
   logoutFailure,
   registerSuccess,
   registerFailure,
+  resetPasswordSuccess,
+  resetPasswordFailure,
   setLoading,
+  setResetPasswordSuccess,
 } from "../actions/usersActions";
 import { showNotification } from "../actions/notificationsActions";
 
-// Función de registro con Email/Password
-function* handleRegister(formData) {
+// 📌 Función de registro con Email/Password
+function* handleRegister(action) {
   try {
     yield put(setLoading(true));
-    const { email, password } = formData.payload;
+    const { email, password } = action.payload;
+
     const userCredential = yield call(
       createUserWithEmailAndPassword,
       auth,
       email,
       password
     );
-    debugger;
+
     yield put(registerSuccess(userCredential.user));
+    yield put(
+      showNotification("auth/account-created-success", "success", 3000)
+    );
   } catch (error) {
-    debugger;
     yield put(registerFailure(error.message));
     yield put(showNotification(error.code, "warning", 3000));
+  } finally {
+    yield put(setLoading(false));
   }
 }
 
-function* handleRegisterSuccess(userCredential) {
-  debugger;
-  yield put(showNotification("auth/account-created-success", "success", 3000));
-  yield put(loginSuccess(userCredential.payload));
-}
-// Función de login con Email/Password
+// 📌 Función de login con Email/Password
 function* handleLogin(action) {
   try {
     yield put(setLoading(true));
-    debugger;
     const { email, password } = action.payload;
+
     const userCredential = yield call(
       signInWithEmailAndPassword,
       auth,
       email,
       password
     );
+
     yield put(loginSuccess(userCredential.user));
   } catch (error) {
     yield put(loginFailure(error.message));
     yield put(showNotification(error.code, "warning", 3000));
+  } finally {
+    yield put(setLoading(false));
   }
 }
 
-// Función de login con Google
+// 📌 Función de login con Google
 function* handleGoogleLogin() {
   try {
+    yield put(setLoading(true));
     const userCredential = yield call(signInWithPopup, auth, googleProvider);
     yield put(loginSuccess(userCredential.user));
   } catch (error) {
     yield put(loginFailure(error.message));
     yield put(showNotification(error.code, "warning", 3000));
+  } finally {
+    yield put(setLoading(false));
   }
 }
 
-// Función de login con GitHub
+// 📌 Función de login con GitHub
 function* handleGitHubLogin() {
   try {
+    yield put(setLoading(true));
     const userCredential = yield call(signInWithPopup, auth, githubProvider);
     yield put(loginSuccess(userCredential.user));
   } catch (error) {
     yield put(loginFailure(error.message));
     yield put(showNotification(error.code, "warning", 3000));
+  } finally {
+    yield put(setLoading(false));
   }
 }
 
-// Función de logout
+// 📌 Función de logout
 function* handleLogout() {
   try {
+    yield put(setLoading(true));
     yield call(signOut, auth);
     yield put(logoutSuccess());
   } catch (error) {
     yield put(logoutFailure(error.message));
+    yield put(showNotification(error.code, "warning", 3000));
+  } finally {
+    yield put(setLoading(false));
   }
 }
 
-// Watcher Sagas
+// 📌 Función de recuperación de contraseña
+function* handleResetPassword(action) {
+  try {
+    yield put(setLoading(true));
+    yield call(sendPasswordResetEmail, auth, action.payload);
+    yield put(resetPasswordSuccess());
+    yield put(setResetPasswordSuccess(true));
+    yield put(showNotification("auth/password-reset-success", "success", 3000));
+  } catch (error) {
+    yield put(resetPasswordFailure(error.message));
+    yield put(setResetPasswordSuccess(false));
+    yield put(showNotification(error.code, "warning", 3000));
+  } finally {
+    yield put(setLoading(false));
+  }
+}
+
+// 📌 Manejar el fallo de la recuperación de contraseña
+function* handleResetPasswordFailure(action) {
+  yield put(setResetPasswordSuccess(false));
+}
+// 📌 Watcher Sagas
 export default function* watchUsersSaga() {
-  yield takeLatest(REGISTER_REQUEST, handleRegister);
-  yield takeLatest(LOGIN_REQUEST, handleLogin);
-  yield takeLatest(LOGIN_WITH_GOOGLE, handleGoogleLogin);
-  yield takeLatest(LOGIN_WITH_GITHUB, handleGitHubLogin);
-  yield takeLatest(LOGOUT_REQUEST, handleLogout);
-  yield takeLatest(REGISTER_SUCCESS, handleRegisterSuccess);
+  yield takeLatest(types.REGISTER_REQUEST, handleRegister);
+  yield takeLatest(types.LOGIN_REQUEST, handleLogin);
+  yield takeLatest(types.LOGIN_WITH_GOOGLE, handleGoogleLogin);
+  yield takeLatest(types.LOGIN_WITH_GITHUB, handleGitHubLogin);
+  yield takeLatest(types.LOGOUT_REQUEST, handleLogout);
+  yield takeLatest(types.RESET_PASSWORD_REQUEST, handleResetPassword);
+  yield takeLatest(types.RESET_PASSWORD_FAILURE, handleResetPasswordFailure);
 }

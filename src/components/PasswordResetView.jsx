@@ -1,0 +1,91 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import {
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  CircularProgress,
+  Box,
+} from "@mui/material";
+import useStyles from "../styles/PasswordResetStyles";
+
+function PasswordResetView({
+  resetPassword,
+  loading,
+  error,
+  getPasswordResetSuccessSelector,
+  setResetPasswordSuccess,
+}) {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const classes = useStyles();
+  const [email, setEmail] = useState("");
+
+  const handleReset = () => {
+    if (email.trim() !== "") {
+      resetPassword(email);
+    }
+  };
+
+  useEffect(() => {
+    console.log(
+      "getPasswordResetSuccessSelector",
+      getPasswordResetSuccessSelector
+    );
+    if (getPasswordResetSuccessSelector) {
+      setResetPasswordSuccess(false);
+      navigate("/login");
+    }
+  }, [getPasswordResetSuccessSelector]);
+
+  return (
+    <Container maxWidth="sm" className={classes.passwordResetContainer}>
+      <Paper elevation={6} className={classes.passwordResetPaper}>
+        <Typography variant="h4" gutterBottom>
+          {t("resetPassword")}
+        </Typography>
+        {getPasswordResetSuccessSelector ? (
+          <Typography color="success">
+            {t("auth/password-reset-success")}
+          </Typography>
+        ) : (
+          <>
+            {error && (
+              <Typography color="error">
+                {t(error.code) || t("auth/internal-error")}
+              </Typography>
+            )}
+            <Box className={classes.passwordResetForm}>
+              <TextField
+                fullWidth
+                margin="normal"
+                label={t("email")}
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {loading ? (
+                <CircularProgress className={classes.loadingIndicator} />
+              ) : (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={handleReset}
+                  className={classes.resetButton}
+                >
+                  {t("resetPasswordButton")}
+                </Button>
+              )}
+            </Box>
+          </>
+        )}
+      </Paper>
+    </Container>
+  );
+}
+
+export default PasswordResetView;
