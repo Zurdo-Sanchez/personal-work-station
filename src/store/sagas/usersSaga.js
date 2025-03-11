@@ -19,6 +19,7 @@ import {
   resetPasswordFailure,
   setLoading,
   setResetPasswordSuccess,
+  setLoadingSuccess,
 } from "../actions/usersActions";
 import { showNotification } from "../actions/notificationsActions";
 
@@ -76,6 +77,7 @@ function* handleGoogleLogin() {
     const userCredential = yield call(signInWithPopup, auth, googleProvider);
     yield put(loginSuccess(userCredential.user));
   } catch (error) {
+    debugger;
     yield put(loginFailure(error.message));
     yield put(showNotification(error.code, "warning", 3000));
   } finally {
@@ -95,6 +97,10 @@ function* handleGitHubLogin() {
   } finally {
     yield put(setLoading(false));
   }
+}
+
+function* handledLoginSuccess(action) {
+  yield put(setLoadingSuccess(action.payload));
 }
 
 // 📌 Función de logout
@@ -141,4 +147,5 @@ export default function* watchUsersSaga() {
   yield takeLatest(types.LOGOUT_REQUEST, handleLogout);
   yield takeLatest(types.RESET_PASSWORD_REQUEST, handleResetPassword);
   yield takeLatest(types.RESET_PASSWORD_FAILURE, handleResetPasswordFailure);
+  yield takeLatest(types.LOGIN_SUCCESS, handledLoginSuccess);
 }
