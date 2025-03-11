@@ -1,37 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
-import {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAILURE,
-} from "../actions/actionType/usersTypes";
+import * as types from "../actions/actionType/usersTypes";
 
-const usersSlice = createSlice({
-  name: "users",
-  initialState: { user: null, loading: false, error: null },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(LOGIN_REQUEST, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(LOGIN_SUCCESS, (state, action) => {
-        state.loading = false;
-        state.user = action.payload;
-      })
-      .addCase(LOGIN_FAILURE, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(LOGOUT_SUCCESS, (state) => {
-        state.user = null;
-      })
-      .addCase(LOGOUT_FAILURE, (state, action) => {
-        state.error = action.payload;
-      });
-  },
-});
+const initialState = {
+  user: null,
+  loading: false,
+  error: null,
+  passwordResetSuccess: false,
+};
 
-export default usersSlice.reducer;
+const usersReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case types.SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case types.SET_RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        passwordResetSuccess: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export default usersReducer;

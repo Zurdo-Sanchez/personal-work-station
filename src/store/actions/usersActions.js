@@ -63,3 +63,22 @@ export const registerFailure = (error) => ({
   type: types.REGISTER_FAILURE,
   payload: error,
 });
+
+export const resetPasswordRequest = (email) => ({
+  type: types.RESET_PASSWORD_REQUEST,
+  payload: email,
+});
+
+export const resetPasswordSuccess = () => ({
+  type: types.RESET_PASSWORD_SUCCESS,
+});
+
+export const setResetPasswordSuccess = (status) => ({
+  type: types.SET_RESET_PASSWORD_SUCCESS,
+  payload: status,
+});
+
+export const resetPasswordFailure = (error) => ({
+  type: types.RESET_PASSWORD_FAILURE,
+  payload: error,
+});

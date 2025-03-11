@@ -20,3 +20,9 @@ export const getAuthLoadingSelector = createSelector(
   [selectUserState],
   (users) => users.loading
 );
+
+//selector para verificar si la recuperación de contraseña fue exitosa
+export const getPasswordResetSuccessSelector = createSelector(
+  [selectUserState],
+  (users) => users.passwordResetSuccess
+);

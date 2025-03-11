@@ -12,6 +12,7 @@ import { getUserSelector } from "./store/selectors/UserSelector";
 import LoginContainer from "./containers/LoginContainer";
 import DashboardContainer from "./containers/DashboardContainer";
 import RegisterContainer from "./containers/RegisterContainer";
+import PasswordResetContainer from "./containers/PasswordResetContainer";
 
 function App() {
   const user = useSelector(getUserSelector);
@@ -28,6 +29,7 @@ function App() {
           path="/register"
           element={!user ? <RegisterContainer /> : <Navigate to="/dashboard" />}
         />
+        <Route path="/reset-password" element={<PasswordResetContainer />} />
 
         {/* Rutas protegidas */}
         <Route

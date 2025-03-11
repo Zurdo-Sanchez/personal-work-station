@@ -5,20 +5,33 @@ const translations = {
     register: "Register",
     email: "Email",
     password: "Password",
+    confirmPassword: "Confirm Password",
     welcome: "Welcome",
     notifications: "Notifications",
     markAsRead: "Mark as read",
     unread: "Unread",
     read: "Read",
-    goToRegister: "Sign up", // ✅ Cambiado a "Sign up" para evitar confusión
+    goToRegister: "Sign up",
     goToLogin: "Go to Login",
     loginWithGoogle: "Login with Google",
     loginWithGitHub: "Login with GitHub",
     registerButton: "Create Account",
+    resetPassword: "Reset Password",
+    resetPasswordButton: "Send Reset Link",
+    newPassword: "New Password",
+    confirmNewPassword: "Confirm New Password",
+    backToLogin: "Back to Login",
+    forgotPassword: "Forgot your password?",
 
     // Success Messages
     "auth/account-created-success":
       "Your account has been successfully created!",
+    "auth/password-reset-success":
+      "A password reset email has been sent to your email address.",
+    "auth/password-reset-success-check":
+      "Check your email for instructions to reset your password.",
+    "auth/password-reset-success-confirm":
+      "Your password has been successfully updated!",
 
     // Firebase Authentication Errors (Email & Password)
     "auth/email-already-in-use":
@@ -55,19 +68,32 @@ const translations = {
     register: "Registrarse",
     email: "Correo Electrónico",
     password: "Contraseña",
+    confirmPassword: "Confirmar Contraseña",
     welcome: "Bienvenido",
     notifications: "Notificaciones",
     markAsRead: "Marcar como leído",
     unread: "No leído",
     read: "Leído",
-    goToRegister: "Registrarse", // ✅ Corregido
+    goToRegister: "Registrarse",
     goToLogin: "Ir al Login",
     loginWithGoogle: "Iniciar con Google",
     loginWithGitHub: "Iniciar con GitHub",
     registerButton: "Crear Cuenta",
+    resetPassword: "Restablecer Contraseña",
+    resetPasswordButton: "Enviar Enlace de Recuperación",
+    newPassword: "Nueva Contraseña",
+    confirmNewPassword: "Confirmar Nueva Contraseña",
+    backToLogin: "Volver al Login",
+    forgotPassword: "¿Olvidaste tu contraseña?",
 
     // Mensajes de éxito
     "auth/account-created-success": "¡Tu cuenta ha sido creada exitosamente!",
+    "auth/password-reset-success":
+      "Se ha enviado un correo para restablecer tu contraseña.",
+    "auth/password-reset-success-check":
+      "Revisa tu correo electrónico para las instrucciones de recuperación.",
+    "auth/password-reset-success-confirm":
+      "¡Tu contraseña ha sido actualizada correctamente!",
 
     // Errores de Firebase (Correo y Contraseña)
     "auth/email-already-in-use":
@@ -100,7 +126,6 @@ const translations = {
     "auth/internal-error":
       "Ocurrió un error interno, por favor intenta nuevamente.",
   },
-  // Agrega más idiomas aquí si es necesario...
 };
 
 export default translations;
