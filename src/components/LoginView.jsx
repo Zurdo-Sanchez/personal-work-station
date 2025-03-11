@@ -117,6 +117,15 @@ function LoginView({
                 >
                   {t("goToRegister")}
                 </Button>
+
+                <Button
+                  fullWidth
+                  variant="text"
+                  color="primary"
+                  onClick={() => navigate("/reset-password")}
+                >
+                  {t("resetPassword")}
+                </Button>
               </>
             )}
           </Box>
