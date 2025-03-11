@@ -82,3 +82,8 @@ export const resetPasswordFailure = (error) => ({
   type: types.RESET_PASSWORD_FAILURE,
   payload: error,
 });
+
+export const setLoadingSuccess = (user) => ({
+  type: types.SET_LOADING_SUCCESS,
+  payload: user,
+});

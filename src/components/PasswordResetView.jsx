@@ -30,11 +30,11 @@ function PasswordResetView({
     }
   };
 
+  const handleBackToLogin = () => {
+    navigate("/login");
+  };
+
   useEffect(() => {
-    console.log(
-      "getPasswordResetSuccessSelector",
-      getPasswordResetSuccessSelector
-    );
     if (getPasswordResetSuccessSelector) {
       setResetPasswordSuccess(false);
       navigate("/login");
@@ -70,15 +70,29 @@ function PasswordResetView({
               {loading ? (
                 <CircularProgress className={classes.loadingIndicator} />
               ) : (
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  onClick={handleReset}
-                  className={classes.resetButton}
-                >
-                  {t("resetPasswordButton")}
-                </Button>
+                <>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={handleReset}
+                    className={classes.resetButton}
+                  >
+                    {t("resetPasswordButton")}
+                  </Button>
+
+                  {/* ✅ Nuevo botón para volver al login */}
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    color="secondary"
+                    onClick={handleBackToLogin}
+                    className={classes.backToLoginButton}
+                    sx={{ mt: 2 }} // Espaciado arriba
+                  >
+                    {t("backToLogin")}
+                  </Button>
+                </>
               )}
             </Box>
           </>

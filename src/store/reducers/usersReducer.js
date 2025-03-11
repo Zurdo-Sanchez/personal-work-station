@@ -20,6 +20,12 @@ const usersReducer = (state = initialState, action) => {
         passwordResetSuccess: action.payload,
       };
 
+    case types.SET_LOADING_SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
     default:
       return state;
   }
