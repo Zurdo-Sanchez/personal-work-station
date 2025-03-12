@@ -6,6 +6,15 @@ const translations = {
     email: "Email",
     password: "Password",
     confirmPassword: "Confirm Password",
+    firstName: "First Name",
+    lastName: "Last Name",
+    phone: "Phone",
+    birthdate: "Birthdate",
+    country: "Country",
+    city: "City",
+    avatar: "Avatar",
+    linkedIn: "LinkedIn",
+    gitHub: "GitHub",
     welcome: "Welcome",
     notifications: "Notifications",
     markAsRead: "Mark as read",
@@ -32,35 +41,6 @@ const translations = {
       "Check your email for instructions to reset your password.",
     "auth/password-reset-success-confirm":
       "Your password has been successfully updated!",
-
-    // Firebase Authentication Errors (Email & Password)
-    "auth/email-already-in-use":
-      "The email address is already in use by another account.",
-    "auth/invalid-email": "The email address is invalid.",
-    "auth/weak-password": "The password must be at least 6 characters long.",
-    "auth/missing-password": "You must enter a password.",
-    "auth/missing-email": "You must enter an email address.",
-    "auth/operation-not-allowed": "This authentication method is not allowed.",
-    "auth/user-disabled": "This account has been disabled.",
-    "auth/user-not-found": "No user found with this email.",
-    "auth/wrong-password": "Incorrect password.",
-    "auth/network-request-failed": "Network error, please try again.",
-    "auth/too-many-requests":
-      "Too many failed attempts. Please try again later.",
-
-    // Firebase Authentication Errors (Google & GitHub)
-    "auth/popup-closed-by-user":
-      "Authentication popup closed before completing sign-in.",
-    "auth/account-exists-with-different-credential":
-      "An account already exists with this email using a different provider.",
-    "auth/cancelled-popup-request":
-      "Authentication request canceled due to another ongoing request.",
-    "auth/credential-already-in-use":
-      "This credential is already associated with another account.",
-    "auth/invalid-credential": "Invalid authentication credential.",
-    "auth/unauthorized-domain":
-      "This authentication method is not allowed for this domain.",
-    "auth/internal-error": "An internal error occurred, please try again.",
   },
   es: {
     login: "Iniciar Sesión",
@@ -69,6 +49,15 @@ const translations = {
     email: "Correo Electrónico",
     password: "Contraseña",
     confirmPassword: "Confirmar Contraseña",
+    firstName: "Nombre",
+    lastName: "Apellido",
+    phone: "Teléfono",
+    birthdate: "Fecha de Nacimiento",
+    country: "País",
+    city: "Ciudad",
+    avatar: "Avatar",
+    linkedIn: "LinkedIn",
+    gitHub: "GitHub",
     welcome: "Bienvenido",
     notifications: "Notificaciones",
     markAsRead: "Marcar como leído",
@@ -94,37 +83,49 @@ const translations = {
       "Revisa tu correo electrónico para las instrucciones de recuperación.",
     "auth/password-reset-success-confirm":
       "¡Tu contraseña ha sido actualizada correctamente!",
+  },
+  ca: {
+    login: "Iniciar Sessió",
+    logout: "Tancar Sessió",
+    register: "Registrar-se",
+    email: "Correu Electrònic",
+    password: "Contrasenya",
+    confirmPassword: "Confirma la Contrasenya",
+    firstName: "Nom",
+    lastName: "Cognom",
+    phone: "Telèfon",
+    birthdate: "Data de Naixement",
+    country: "País",
+    city: "Ciutat",
+    avatar: "Avatar",
+    linkedIn: "LinkedIn",
+    gitHub: "GitHub",
+    welcome: "Benvingut",
+    notifications: "Notificacions",
+    markAsRead: "Marcar com a llegit",
+    unread: "No llegit",
+    read: "Llegit",
+    goToRegister: "Registrar-se",
+    goToLogin: "Anar al Login",
+    loginWithGoogle: "Iniciar amb Google",
+    loginWithGitHub: "Iniciar amb GitHub",
+    registerButton: "Crear Compte",
+    resetPassword: "Restablir Contrasenya",
+    resetPasswordButton: "Enviar Enllaç de Recuperació",
+    newPassword: "Nova Contrasenya",
+    confirmNewPassword: "Confirmar Nova Contrasenya",
+    backToLogin: "Tornar al Login",
+    forgotPassword: "Has oblidat la teva contrasenya?",
 
-    // Errores de Firebase (Correo y Contraseña)
-    "auth/email-already-in-use":
-      "El correo electrónico ya está en uso por otra cuenta.",
-    "auth/invalid-email": "El correo electrónico no es válido.",
-    "auth/weak-password": "La contraseña debe tener al menos 6 caracteres.",
-    "auth/missing-password": "Debes ingresar una contraseña.",
-    "auth/missing-email": "Debes ingresar un correo electrónico.",
-    "auth/operation-not-allowed":
-      "Este método de autenticación no está permitido.",
-    "auth/user-disabled": "Esta cuenta ha sido deshabilitada.",
-    "auth/user-not-found": "No se encontró un usuario con este correo.",
-    "auth/wrong-password": "Contraseña incorrecta.",
-    "auth/network-request-failed": "Error de red, por favor intenta de nuevo.",
-    "auth/too-many-requests":
-      "Demasiados intentos fallidos. Inténtalo más tarde.",
-
-    // Errores de Firebase (Google y GitHub)
-    "auth/popup-closed-by-user":
-      "La ventana de autenticación se cerró antes de completar el inicio de sesión.",
-    "auth/account-exists-with-different-credential":
-      "Ya existe una cuenta con este correo usando otro proveedor.",
-    "auth/cancelled-popup-request":
-      "Se canceló la solicitud de autenticación debido a otra en curso.",
-    "auth/credential-already-in-use":
-      "Esta credencial ya está asociada a otra cuenta.",
-    "auth/invalid-credential": "Credencial de autenticación inválida.",
-    "auth/unauthorized-domain":
-      "Este método de autenticación no está permitido en este dominio.",
-    "auth/internal-error":
-      "Ocurrió un error interno, por favor intenta nuevamente.",
+    // Missatges d'èxit
+    "auth/account-created-success":
+      "El teu compte ha estat creat correctament!",
+    "auth/password-reset-success":
+      "S'ha enviat un correu per restablir la teva contrasenya.",
+    "auth/password-reset-success-check":
+      "Revisa el teu correu electrònic per a les instruccions de recuperació.",
+    "auth/password-reset-success-confirm":
+      "La teva contrasenya s'ha actualitzat correctament!",
   },
 };
 

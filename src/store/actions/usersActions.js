@@ -6,6 +6,11 @@ export const setLoading = (loading) => ({
   payload: loading,
 });
 
+export const setUser = (user) => ({
+  type: types.SET_USER,
+  payload: user,
+});
+
 // Email & Password Login
 export const loginRequest = (email, password) => ({
   type: types.LOGIN_REQUEST,
@@ -81,9 +86,4 @@ export const setResetPasswordSuccess = (status) => ({
 export const resetPasswordFailure = (error) => ({
   type: types.RESET_PASSWORD_FAILURE,
   payload: error,
-});
-
-export const setLoadingSuccess = (user) => ({
-  type: types.SET_LOADING_SUCCESS,
-  payload: user,
 });
