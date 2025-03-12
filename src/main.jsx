@@ -7,7 +7,8 @@ import Button from "@mui/material/Button";
 import lightTheme from "./themes/lightTheme";
 import darkTheme from "./themes/darkTheme";
 import customTheme from "./themes/customTheme";
-import store from "./store";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./store";
 import App from "./App";
 import Notifications from "./containers/NotificationsContainer";
 import "./i18n";
@@ -27,16 +28,18 @@ function Root() {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Notifications />
-        <App />
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <Button variant="contained" color="primary" onClick={toggleTheme}>
-            Cambiar Tema
-          </Button>
-        </div>
-      </ThemeProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Notifications />
+          <App />
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <Button variant="contained" color="primary" onClick={toggleTheme}>
+              Cambiar Tema
+            </Button>
+          </div>
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 }

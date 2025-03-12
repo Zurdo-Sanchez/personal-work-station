@@ -6,6 +6,11 @@ export const setLoading = (loading) => ({
   payload: loading,
 });
 
+export const setUser = (user) => ({
+  type: types.SET_USER,
+  payload: user,
+});
+
 // Email & Password Login
 export const loginRequest = (email, password) => ({
   type: types.LOGIN_REQUEST,
