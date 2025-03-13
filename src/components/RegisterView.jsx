@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -10,10 +10,13 @@ import {
   CircularProgress,
   Box,
   Grid,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import useStyles from "../styles/RegisterStyles";
 
-function RegisterView({ register, loading, setUserCreated, getUserCreated }) {
+function RegisterView({ register, loading, error }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const navigate = useNavigate();
@@ -34,13 +37,8 @@ function RegisterView({ register, loading, setUserCreated, getUserCreated }) {
   });
 
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    if (getUserCreated) {
-      setUserCreated(false);
-      navigate("/login");
-    }
-  }, [getUserCreated]);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Manejo de cambios en los inputs
   const handleChange = (e) => {
@@ -57,7 +55,7 @@ function RegisterView({ register, loading, setUserCreated, getUserCreated }) {
     if (formData.password !== formData.confirmPassword) {
       setErrors((prev) => ({
         ...prev,
-        confirmPassword: t("passwordMismatch"), // Mensaje de error si no coinciden
+        confirmPassword: t("passwordMismatch"),
       }));
     }
   };
@@ -96,6 +94,11 @@ function RegisterView({ register, loading, setUserCreated, getUserCreated }) {
         <Typography variant="h4" align="center" gutterBottom>
           {t("register")}
         </Typography>
+        {error && (
+          <Typography color="error" align="center">
+            {error}
+          </Typography>
+        )}
         <Box component="form" noValidate autoComplete="off">
           <Grid container spacing={2}>
             {/* Nombre y Apellido */}
@@ -151,18 +154,30 @@ function RegisterView({ register, loading, setUserCreated, getUserCreated }) {
               />
             </Grid>
 
-            {/* Contraseña y Confirmación */}
+            {/* Contraseña y Confirmación con ojito 👁 */}
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
                 required
                 label={t("password")}
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 variant="outlined"
                 onChange={handleChange}
                 error={!!errors.password}
                 helperText={errors.password}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -171,12 +186,30 @@ function RegisterView({ register, loading, setUserCreated, getUserCreated }) {
                 required
                 label={t("confirmPassword")}
                 name="confirmPassword"
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 variant="outlined"
                 onChange={handleChange}
-                onBlur={handleConfirmPasswordBlur} // ✅ Valida al perder el foco
+                onBlur={handleConfirmPasswordBlur}
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                        edge="end"
+                      >
+                        {showConfirmPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
 
@@ -201,28 +234,6 @@ function RegisterView({ register, loading, setUserCreated, getUserCreated }) {
                 onChange={handleChange}
               />
             </Grid>
-
-            {/* Ciudad y Avatar */}
-            <Grid item xs={12} md={6}>
-              <TextField
-                fullWidth
-                label={t("city")}
-                name="city"
-                variant="outlined"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField
-                fullWidth
-                label={t("avatar")}
-                name="avatar"
-                variant="outlined"
-                onChange={handleChange}
-              />
-            </Grid>
-
-            {/* LinkedIn y GitHub */}
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
