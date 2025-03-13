@@ -16,7 +16,7 @@ import {
   loginFailure,
   logoutSuccess,
   logoutFailure,
-  registerSuccess,
+  setUserCreated,
   registerFailure,
   resetPasswordSuccess,
   resetPasswordFailure,
@@ -60,6 +60,7 @@ function* handleRegister(action) {
       uid: user.uid,
       firstName,
       lastName,
+      displayName: firstName + " " + lastName,
       email,
       phone,
       birthdate,
@@ -71,7 +72,7 @@ function* handleRegister(action) {
       createdAt: new Date(),
     });
 
-    yield put(registerSuccess(user));
+    yield put(setUserCreated(true));
     yield put(showNotification("Cuenta creada con éxito", "success", 5000));
   } catch (error) {
     yield put(registerFailure(error.message));

@@ -63,7 +63,10 @@ export const registerSuccess = (user) => ({
   type: types.REGISTER_SUCCESS,
   payload: user,
 });
-
+export const setUserCreated = (action) => ({
+  type: types.SET_USER_CREATED,
+  payload: action,
+});
 export const registerFailure = (error) => ({
   type: types.REGISTER_FAILURE,
   payload: error,
