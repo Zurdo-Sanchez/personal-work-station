@@ -99,8 +99,6 @@ function* handleLogin(action) {
   } catch (error) {
     yield put(loginFailure(error.message));
     yield put(showNotification(error.code, "warning", 5000));
-  } finally {
-    yield put(setLoading(false));
   }
 }
 
@@ -113,8 +111,6 @@ function* handleGoogleLogin() {
   } catch (error) {
     yield put(loginFailure(error.message));
     yield put(showNotification(error.code, "warning", 5000));
-  } finally {
-    yield put(setLoading(false));
   }
 }
 
@@ -127,8 +123,6 @@ function* handleGitHubLogin() {
   } catch (error) {
     yield put(loginFailure(error.message));
     yield put(showNotification(error.code, "warning", 5000));
-  } finally {
-    yield put(setLoading(false));
   }
 }
 
@@ -217,8 +211,6 @@ function* handleResetPassword(action) {
     );
   } catch (error) {
     yield put(resetPasswordFailure(error.message));
-    yield put(setResetPasswordSuccess(false));
-    yield put(showNotification(error.code, "warning", 5000));
   } finally {
     yield put(setLoading(false));
   }
@@ -226,6 +218,7 @@ function* handleResetPassword(action) {
 
 // 📌 Manejar el fallo de la recuperación de contraseña
 function* handleResetPasswordFailure(action) {
+  yield put(showNotification(action, "warning", 5000));
   yield put(setResetPasswordSuccess(false));
 }
 
