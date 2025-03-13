@@ -36,6 +36,9 @@ const usersSlice = createSlice({
       })
       .addCase(types.SET_USER_CREATED, (state, action) => {
         state.userCreated = action.payload;
+      })
+      .addCase(types.SET_LOADING, (state, action) => {
+        state.loading = action.payload;
       });
   },
 });

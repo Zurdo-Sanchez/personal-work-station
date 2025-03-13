@@ -11,6 +11,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
 import App from "./App";
 import Notifications from "./containers/NotificationsContainer";
+import Loader from "./containers/LoaderContainer";
 import "./i18n";
 
 function Root() {
@@ -31,6 +32,7 @@ function Root() {
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <Loader />
           <Notifications />
           <App />
           <div style={{ textAlign: "center", marginTop: "20px" }}>
