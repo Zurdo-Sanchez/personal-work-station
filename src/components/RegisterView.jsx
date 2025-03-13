@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import useStyles from "../styles/RegisterStyles";
 
-function RegisterView({ register, loading, error }) {
+function RegisterView({ register, loading, setUserCreated, getUserCreated }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const navigate = useNavigate();
@@ -34,6 +34,13 @@ function RegisterView({ register, loading, error }) {
   });
 
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (getUserCreated) {
+      setUserCreated(false);
+      navigate("/login");
+    }
+  }, [getUserCreated]);
 
   // Manejo de cambios en los inputs
   const handleChange = (e) => {
@@ -89,11 +96,6 @@ function RegisterView({ register, loading, error }) {
         <Typography variant="h4" align="center" gutterBottom>
           {t("register")}
         </Typography>
-        {error && (
-          <Typography color="error" align="center">
-            {error}
-          </Typography>
-        )}
         <Box component="form" noValidate autoComplete="off">
           <Grid container spacing={2}>
             {/* Nombre y Apellido */}
