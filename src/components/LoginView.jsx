@@ -1,10 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Container, Paper, TextField, Button, Box } from "@mui/material";
+import {
+  Container,
+  Paper,
+  TextField,
+  Button,
+  Box,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import useStyles from "../styles/LoginStyles";
 
 function LoginView({
@@ -17,6 +26,7 @@ function LoginView({
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   // Manejo de inicio de sesión con email y contraseña
   const handleLogin = () => {
@@ -41,11 +51,24 @@ function LoginView({
             fullWidth
             margin="normal"
             label={t("password")}
-            type="password"
+            type={showPassword ? "text" : "password"}
             variant="outlined"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
+
           {/* Botón de inicio de sesión con Email y Contraseña */}
           <Button
             fullWidth
@@ -93,6 +116,7 @@ function LoginView({
             {t("goToRegister")}
           </Button>
 
+          {/* Botón para recuperar contraseña */}
           <Button
             fullWidth
             variant="text"
