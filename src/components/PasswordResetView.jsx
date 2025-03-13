@@ -35,9 +35,10 @@ function PasswordResetView({
   };
 
   useEffect(() => {
+    debugger;
     if (getPasswordResetSuccessSelector) {
       setResetPasswordSuccess(false);
-      navigate("/login");
+      handleBackToLogin();
     }
   }, [getPasswordResetSuccessSelector]);
 
@@ -47,56 +48,45 @@ function PasswordResetView({
         <Typography variant="h4" gutterBottom>
           {t("resetPassword")}
         </Typography>
-        {getPasswordResetSuccessSelector ? (
-          <Typography color="success">
-            {t("auth/password-reset-success")}
-          </Typography>
-        ) : (
-          <>
-            {error && (
-              <Typography color="error">
-                {t(error.code) || t("auth/internal-error")}
-              </Typography>
-            )}
-            <Box className={classes.passwordResetForm}>
-              <TextField
-                fullWidth
-                margin="normal"
-                label={t("email")}
-                variant="outlined"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {loading ? (
-                <CircularProgress className={classes.loadingIndicator} />
-              ) : (
-                <>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={handleReset}
-                    className={classes.resetButton}
-                  >
-                    {t("resetPasswordButton")}
-                  </Button>
+        <>
+          <Box className={classes.passwordResetForm}>
+            <TextField
+              fullWidth
+              margin="normal"
+              label={t("email")}
+              variant="outlined"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {loading ? (
+              <CircularProgress className={classes.loadingIndicator} />
+            ) : (
+              <>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={handleReset}
+                  className={classes.resetButton}
+                >
+                  {t("resetPasswordButton")}
+                </Button>
 
-                  {/* ✅ Nuevo botón para volver al login */}
-                  <Button
-                    fullWidth
-                    variant="outlined"
-                    color="secondary"
-                    onClick={handleBackToLogin}
-                    className={classes.backToLoginButton}
-                    sx={{ mt: 2 }} // Espaciado arriba
-                  >
-                    {t("backToLogin")}
-                  </Button>
-                </>
-              )}
-            </Box>
-          </>
-        )}
+                {/* ✅ Nuevo botón para volver al login */}
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  color="secondary"
+                  onClick={handleBackToLogin}
+                  className={classes.backToLoginButton}
+                  sx={{ mt: 2 }} // Espaciado arriba
+                >
+                  {t("backToLogin")}
+                </Button>
+              </>
+            )}
+          </Box>
+        </>
       </Paper>
     </Container>
   );
