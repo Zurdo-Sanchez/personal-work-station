@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -16,7 +16,13 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import useStyles from "../styles/RegisterStyles";
 
-function RegisterView({ register, loading, error }) {
+function RegisterView({
+  register,
+  loading,
+  error,
+  getUserCreated,
+  setUserCreated,
+}) {
   const { t } = useTranslation();
   const classes = useStyles();
   const navigate = useNavigate();
@@ -83,6 +89,13 @@ function RegisterView({ register, loading, error }) {
       register(formData);
     }
   };
+
+  useEffect(() => {
+    if (getUserCreated) {
+      setUserCreated(false);
+      navigate("/login");
+    }
+  }, [getUserCreated]);
 
   return (
     <Container maxWidth="md" className={classes.registerContainer}>

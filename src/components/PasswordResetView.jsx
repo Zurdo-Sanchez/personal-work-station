@@ -35,7 +35,6 @@ function PasswordResetView({
   };
 
   useEffect(() => {
-    debugger;
     if (getPasswordResetSuccessSelector) {
       setResetPasswordSuccess(false);
       handleBackToLogin();
