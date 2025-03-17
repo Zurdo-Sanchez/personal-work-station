@@ -15,6 +15,8 @@ import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import useStyles from "../styles/HeaderStyles"; // Importamos los estilos
 
+import logo from "../assets/img/logo.png";
+import textLogo from "../assets/img/texto-logo.png";
 import SpainFlag from "../assets/img/Flag_of_Spain.svg";
 import CataloniaFlag from "../assets/img/Flag_of_Catalonia.svg";
 import UKFlag from "../assets/img/Flag_of_the_United_Kingdom.svg";
@@ -67,84 +69,93 @@ function HeaderView({
   return (
     <AppBar position="static" className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
-        {/* Selector de Idioma */}
-        <Select
-          value={languageSelected}
-          className={classes.languageSelector}
-          onChange={handleChangeLenguage}
-          renderValue={(selected) => (
-            <img
-              src={flagMap[selected]}
-              alt="Selected Language"
-              style={{ width: 24, height: 16 }}
-            />
-          )}
-        >
-          <MenuItem value="es">
-            <img
-              src={SpainFlag}
-              alt="Spain Flag"
-              style={{ width: 20, marginRight: 8 }}
-            />
-            Español
-          </MenuItem>
-          <MenuItem value="ca">
-            <img
-              src={CataloniaFlag}
-              alt="Catalonia Flag"
-              style={{ width: 20, marginRight: 8 }}
-            />
-            Català
-          </MenuItem>
-          <MenuItem value="en">
-            <img
-              src={UKFlag}
-              alt="UK Flag"
-              style={{ width: 20, marginRight: 8 }}
-            />
-            English
-          </MenuItem>
-        </Select>
-        <MenuItem>
-          {isDarkMode ? (
-            <Brightness7 className={classes.icon} onClick={toggleTheme} />
-          ) : (
-            <Brightness4 className={classes.icon} onClick={toggleTheme} />
-          )}
-        </MenuItem>
-        {/* Menú del Usuario */}
-        {user && (
-          <Box className={classes.userMenu}>
-            <IconButton onClick={handleMenuOpen}>
-              <Avatar className={classes.avatar}>
-                {user?.photoURL ? (
-                  <img
-                    src={user.photoURL}
-                    alt={t("avatar")}
-                    className={classes.avatarImg}
-                  />
-                ) : (
-                  `${user?.firstName || "?"}${user?.lastName || "?"}`
-                )}
-              </Avatar>
-            </IconButton>
+        <div className={classes.rightToolbar}>
+          <img src={logo} style={{ width: 50, marginRight: 8 }} />
+        </div>
+        <div className={classes.midToolbar}>
+          <img src={textLogo} style={{ width: 150, marginRight: 8 }} />
+        </div>
 
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-            >
-              <MenuItem
-                onClick={() => {
-                  setAnchorEl(null);
-                  logoutRequest();
-                }}
+        <div className={classes.leftToolbar}>
+          {/* Selector de Idioma */}
+          <Select
+            value={languageSelected}
+            className={classes.languageSelector}
+            onChange={handleChangeLenguage}
+            renderValue={(selected) => (
+              <img
+                src={flagMap[selected]}
+                alt="Selected Language"
+                style={{ width: 24, height: 16 }}
+              />
+            )}
+          >
+            <MenuItem value="es">
+              <img
+                src={SpainFlag}
+                alt="Spain Flag"
+                style={{ width: 20, marginRight: 8 }}
+              />
+              Español
+            </MenuItem>
+            <MenuItem value="ca">
+              <img
+                src={CataloniaFlag}
+                alt="Catalonia Flag"
+                style={{ width: 20, marginRight: 8 }}
+              />
+              Català
+            </MenuItem>
+            <MenuItem value="en">
+              <img
+                src={UKFlag}
+                alt="UK Flag"
+                style={{ width: 20, marginRight: 8 }}
+              />
+              English
+            </MenuItem>
+          </Select>
+          <MenuItem>
+            {isDarkMode ? (
+              <Brightness7 className={classes.icon} onClick={toggleTheme} />
+            ) : (
+              <Brightness4 className={classes.icon} onClick={toggleTheme} />
+            )}
+          </MenuItem>
+          {/* Menú del Usuario */}
+          {user && (
+            <Box className={classes.userMenu}>
+              <IconButton onClick={handleMenuOpen}>
+                <Avatar className={classes.avatar}>
+                  {user?.photoURL ? (
+                    <img
+                      src={user.photoURL}
+                      alt={t("avatar")}
+                      className={classes.avatarImg}
+                    />
+                  ) : (
+                    `${user?.firstName || "?"}${user?.lastName || "?"}`
+                  )}
+                </Avatar>
+              </IconButton>
+
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
               >
-                {t("logout")}
-              </MenuItem>
-            </Menu>
-          </Box>
-        )}
+                <MenuItem
+                  onClick={() => {
+                    setAnchorEl(null);
+                    logoutRequest();
+                  }}
+                >
+                  {t("logout")}
+                </MenuItem>
+              </Menu>
+            </Box>
+          )}
+        </div>
       </Toolbar>
     </AppBar>
   );
