@@ -5,9 +5,9 @@ const selectConfigState = (state) => state.config;
 
 export const getThemeSelector = createSelector(
   [selectConfigState],
-  (users) => users.theme
+  (config) => config.theme
 );
 export const getLanguageSelector = createSelector(
   [selectConfigState],
-  (users) => users.language
+  (config) => config.language
 );

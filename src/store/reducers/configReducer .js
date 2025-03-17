@@ -5,7 +5,7 @@ const usersSlice = createSlice({
   name: "config",
   initialState: {
     theme: "light",
-    lenglanguage: "es",
+    language: "es",
   },
   reducers: {},
   extraReducers: (builder) => {

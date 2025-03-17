@@ -7,14 +7,17 @@ const useStyles = makeStyles({
   },
   toolbar: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
   },
   languageSelector: {
-    color: colors.textPrimaryLight,
-    backgroundColor: "rgba(255,255,255,0.1)",
-    borderRadius: 8,
-    "& .MuiSelect-icon": {
-      color: colors.textPrimaryLight,
+    border: "none", // Elimina el borde
+    boxShadow: "none", // Evita sombras que puedan parecer bordes
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none", // Elimina el borde de Select cuando está en modo outlined
+    },
+    "&:focus, &:hover, &:active": {
+      border: "none",
+      boxShadow: "none",
     },
   },
   userMenu: {

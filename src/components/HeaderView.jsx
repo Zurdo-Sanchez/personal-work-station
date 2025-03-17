@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -10,24 +10,27 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import Button from "@mui/material/Button";
 
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import useStyles from "../styles/HeaderStyles"; // Importamos los estilos
 
+import SpainFlag from "../assets/img/Flag_of_Spain.svg";
+import CataloniaFlag from "../assets/img/Flag_of_Catalonia.svg";
+import UKFlag from "../assets/img/Flag_of_the_United_Kingdom.svg";
+
 function HeaderView({
   user,
   logoutRequest,
-  isDarkMode,
   setTheme,
   setLanguage,
+  getLenguage,
   getTheme,
 }) {
   const classes = useStyles();
   const { t, i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const isDarkMode = getTheme === "dark";
   // Manejo de menú de usuario
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,23 +48,70 @@ function HeaderView({
     const theme = getTheme;
     console.log(theme);
     setTheme(
-      theme === "light" ? "dark" : theme === "dark" ? "custom" : "light"
+      theme === "light" ? "dark" : theme === "dark" && user ? "custom" : "light"
     );
+  };
+  const [languageSelected, setLanguageSelected] = useState(getLenguage);
+
+  const handleChangeLenguage = (event) => {
+    setLanguageSelected(event.target.value);
+    setLanguage(event.target.value);
+    changeLanguage(event);
+  };
+
+  const flagMap = {
+    es: SpainFlag,
+    ca: CataloniaFlag,
+    en: UKFlag,
   };
   return (
     <AppBar position="static" className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
         {/* Selector de Idioma */}
         <Select
-          value={i18n.language}
-          onChange={changeLanguage}
+          value={languageSelected}
           className={classes.languageSelector}
+          onChange={handleChangeLenguage}
+          renderValue={(selected) => (
+            <img
+              src={flagMap[selected]}
+              alt="Selected Language"
+              style={{ width: 24, height: 16 }}
+            />
+          )}
         >
-          <MenuItem value="es">🇪🇸 {t("spanish")}</MenuItem>
-          <MenuItem value="ca">🇨🇦 {t("catalan")}</MenuItem>
-          <MenuItem value="en">🇬🇧 {t("english")}</MenuItem>
+          <MenuItem value="es">
+            <img
+              src={SpainFlag}
+              alt="Spain Flag"
+              style={{ width: 20, marginRight: 8 }}
+            />
+            Español
+          </MenuItem>
+          <MenuItem value="ca">
+            <img
+              src={CataloniaFlag}
+              alt="Catalonia Flag"
+              style={{ width: 20, marginRight: 8 }}
+            />
+            Català
+          </MenuItem>
+          <MenuItem value="en">
+            <img
+              src={UKFlag}
+              alt="UK Flag"
+              style={{ width: 20, marginRight: 8 }}
+            />
+            English
+          </MenuItem>
         </Select>
-
+        <MenuItem>
+          {isDarkMode ? (
+            <Brightness7 className={classes.icon} onClick={toggleTheme} />
+          ) : (
+            <Brightness4 className={classes.icon} onClick={toggleTheme} />
+          )}
+        </MenuItem>
         {/* Menú del Usuario */}
         {user && (
           <Box className={classes.userMenu}>
@@ -84,29 +134,14 @@ function HeaderView({
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
             >
-              <Typography className={classes.userName}>
-                {user ? `${user.firstName} ${user.lastName}` : t("guest")}
-              </Typography>
-
-              {/* Opción de cambiar tema solo si está logueado */}
-              <MenuItem>
-                {isDarkMode ? (
-                  <Brightness7 className={classes.icon} />
-                ) : (
-                  <Brightness4 className={classes.icon} />
-                )}
-                {t("changeTheme")}
+              <MenuItem
+                onClick={() => {
+                  setAnchorEl(null);
+                  logoutRequest();
+                }}
+              >
+                {t("logout")}
               </MenuItem>
-              <div style={{ textAlign: "center", marginTop: "20px" }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={toggleTheme}
-                >
-                  Cambiar Tema
-                </Button>
-              </div>
-              <MenuItem onClick={() => logoutRequest()}>{t("logout")}</MenuItem>
             </Menu>
           </Box>
         )}
