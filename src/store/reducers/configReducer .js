@@ -6,6 +6,7 @@ const usersSlice = createSlice({
   initialState: {
     theme: "light",
     language: "es",
+    orderCard: [1, 2, 3],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -15,6 +16,9 @@ const usersSlice = createSlice({
       })
       .addCase(types.SET_LANGUAGE, (state, action) => {
         state.language = action.payload;
+      })
+      .addCase(types.SET_ORDER_CARD, (state, action) => {
+        state.orderCard = action.payload;
       });
   },
 });

@@ -1,14 +1,16 @@
 import { connect } from "react-redux";
 import DasboardView from "../components/DashboardView";
-import { logoutRequest } from "../store/actions/usersActions";
+import { setOrderCard } from "../store/actions/configActions";
 import { getUserSelector } from "../store/selectors/UserSelector";
+import { getOrderCardsSelector } from "../store/selectors/ConfigSelector ";
 
 const mapStateToProps = (state) => ({
   user: getUserSelector(state),
+  orderCard: getOrderCardsSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  logoutRequest: () => dispatch(logoutRequest()),
+  setOrderCard: () => dispatch(setOrderCard()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DasboardView);
