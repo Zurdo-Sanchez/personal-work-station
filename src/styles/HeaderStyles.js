@@ -14,8 +14,20 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   leftToolbar: {
+    width: "20%",
     display: "flex",
     justifyContent: "flex-end",
+    width: "20%",
+  },
+  midToolbar: {
+    display: "flex",
+    justifyContent: "space-around",
+    width: "60%",
+  },
+  rightToolbar: {
+    display: "flex",
+    alignItems: "center",
+    width: "20%",
   },
   midToolbar: {
     display: "flex",
