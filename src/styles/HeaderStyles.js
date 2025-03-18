@@ -9,6 +9,9 @@ const useStyles = makeStyles({
   },
   toolbar: {
     width: "100% !important",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   leftToolbar: {
     width: "20%",
@@ -25,6 +28,14 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     width: "20%",
+  },
+  midToolbar: {
+    display: "flex",
+    justifyContent: "space-around",
+  },
+  rightToolbar: {
+    display: "flex",
+    alignItems: "center",
   },
   languageSelector: {
     border: "none", // Elimina el borde
