@@ -5,6 +5,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
+import { Grid } from "@mui/material";
+import mainStyles from "./mainStyles.js";
 import App from "./App";
 import Notifications from "./containers/NotificationsContainer";
 import Loader from "./containers/LoaderContainer";
@@ -18,7 +20,7 @@ import customTheme from "./themes/customTheme";
 
 function Root() {
   const selectedTheme = useSelector((state) => state.config.theme);
-
+  const classes = mainStyles();
   const theme =
     selectedTheme === "dark"
       ? darkTheme
@@ -30,10 +32,12 @@ function Root() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header />
       <Notifications />
       <Loader />
-      <App />
+      <Grid className={classes.container}>
+        <Header />
+        <App />
+      </Grid>
     </ThemeProvider>
   );
 }

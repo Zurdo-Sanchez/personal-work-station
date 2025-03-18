@@ -8,14 +8,18 @@ import {
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./routes/ ProtectedRoute";
 import { getUserSelector } from "./store/selectors/UserSelector";
+import { Grid } from "@mui/material";
 // Componentes
 import LoginContainer from "./containers/LoginContainer";
 import DashboardContainer from "./containers/DashboardContainer";
 import RegisterContainer from "./containers/RegisterContainer";
 import PasswordResetContainer from "./containers/PasswordResetContainer";
+import SidebarContainer from "./containers/SidebarContainer";
+import AppStyles from "./AppStyles";
 
 function App() {
   const user = useSelector(getUserSelector);
+  const classes = AppStyles();
 
   return (
     <Router>
@@ -36,7 +40,10 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <DashboardContainer />
+              <Grid className={classes.container}>
+                <SidebarContainer />
+                <DashboardContainer />
+              </Grid>
             </ProtectedRoute>
           }
         />

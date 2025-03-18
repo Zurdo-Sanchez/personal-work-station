@@ -5,7 +5,6 @@ const useStyles = makeStyles({
   container: {
     padding: "30px",
     backgroundColor: colors.background,
-    minHeight: "800vh",
   },
   title: {
     fontSize: "32px",
