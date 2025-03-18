@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setOrderCard: () => dispatch(setOrderCard()),
+  setOrderCard: (orderCard) => dispatch(setOrderCard(orderCard)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DasboardView);

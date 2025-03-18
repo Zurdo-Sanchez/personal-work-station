@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as types from "../actions/actionType/configTypes";
+import { act } from "react";
 
 const usersSlice = createSlice({
   name: "config",
   initialState: {
     theme: "light",
     language: "es",
-    orderCard: [1, 2, 3],
+    orderCard: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -19,6 +20,7 @@ const usersSlice = createSlice({
       })
       .addCase(types.SET_ORDER_CARD, (state, action) => {
         state.orderCard = action.payload;
+        console.log(action);
       });
   },
 });

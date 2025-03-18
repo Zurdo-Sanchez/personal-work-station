@@ -4,7 +4,7 @@ import {
   CardContent,
   Typography,
   Grid,
-  recomposeColor,
+  useMediaQuery,
 } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import ListAltIcon from "@mui/icons-material/ListAlt";
@@ -12,8 +12,8 @@ import NoteOutlinedIcon from "@mui/icons-material/NoteOutlined";
 import useStyles from "../styles/DashboardStyles";
 import { colors } from "../themes/colors";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useTheme } from "@mui/material/styles";
 
-// Función para reordenar los elementos por id
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -21,15 +21,13 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-function DashboardView({ user, orderCard, setOrderCard }) {
+function DashboardView({ user }) {
   const classes = useStyles();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // Detecta pantalla chica
 
-  // Estado para el orden de los IDs
-  const [moduleOrder, setModuleOrder] = useState(
-    orderCard ? orderCard : [1, 2, 3]
-  );
+  const [moduleOrder, setModuleOrder] = useState([1, 2, 3]);
 
-  // Los módulos se mantienen fijos, solo se usa el orden de los IDs
   const modules = [
     {
       id: 1,
@@ -56,18 +54,13 @@ function DashboardView({ user, orderCard, setOrderCard }) {
 
   const handleOnDragEnd = (result) => {
     const { destination, source } = result;
-    if (!destination) return; // Si no se suelta en un lugar válido, no hacer nada
-    if (destination.index === source.index) return; // Si no hay cambio de lugar, no hacer nada
-
-    // Reordenar el array de IDs
+    if (!destination || destination.index === source.index) return;
     const reorderedModuleOrder = reorder(
       moduleOrder,
       source.index,
       destination.index
     );
     setModuleOrder(reorderedModuleOrder);
-    console.log(reorderedModuleOrder);
-    setOrderCard(reorderedModuleOrder);
   };
 
   const navigateTo = (path) => {
@@ -80,7 +73,10 @@ function DashboardView({ user, orderCard, setOrderCard }) {
         Bienvenido, {user.displayName || user.firstname}
       </Typography>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="droppable" direction="horizontal">
+        <Droppable
+          droppableId="droppable"
+          direction={isSmallScreen ? "vertical" : "horizontal"} // ✅ cambia según tamaño
+        >
           {(provided) => (
             <Grid
               container
@@ -89,11 +85,11 @@ function DashboardView({ user, orderCard, setOrderCard }) {
               {...provided.droppableProps}
             >
               {moduleOrder.map((id, index) => {
-                const module = modules.find((mod) => mod.id === id); // Encuentra el módulo por ID
+                const module = modules.find((mod) => mod.id === id);
                 return (
                   <Draggable
                     key={module.id}
-                    draggableId={String(module.id)}
+                    draggableId={module.id.toString()}
                     index={index}
                   >
                     {(provided) => (
