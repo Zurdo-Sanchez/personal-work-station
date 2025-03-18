@@ -11,3 +11,7 @@ export const getLanguageSelector = createSelector(
   [selectConfigState],
   (config) => config.language
 );
+export const getOrderCardsSelector = createSelector(
+  [selectConfigState],
+  (config) => config.orderCard
+);
