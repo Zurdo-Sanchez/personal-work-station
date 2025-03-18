@@ -9,3 +9,8 @@ export const setLanguage = (language) => ({
   type: types.SET_LANGUAGE,
   payload: language,
 });
+
+export const setOrderCard = (orderCard) => ({
+  type: types.SET_ORDER_CARD,
+  payload: orderCard,
+});

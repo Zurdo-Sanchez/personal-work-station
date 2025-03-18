@@ -13,4 +13,7 @@ export const colors = {
   textSecondaryLight: "#555555",
   textPrimaryDark: "#ffffff",
   textSecondaryDark: "#bbbbbb",
+  bgEmailCard: "#E4F0FB",
+  bgToDoCard: "#D5F8F3",
+  bgNoteCard: "#FFF3D1",
 };

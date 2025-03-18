@@ -11,7 +11,7 @@ const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["users"], // 🔥 Agregamos "users" para que se persista
+  whitelist: ["users", "config"], // 🔥 Agregamos "users" para que se persista
 };
 
 // Reducer persistente
