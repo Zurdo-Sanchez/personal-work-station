@@ -13,6 +13,7 @@ import useStyles from "../styles/DashboardStyles";
 import { colors } from "../themes/colors";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -26,6 +27,7 @@ function DashboardView({ user }) {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // Detecta pantalla chica
 
+  const navigate = useNavigate();
   const [moduleOrder, setModuleOrder] = useState([1, 2, 3]);
 
   const modules = [
@@ -105,7 +107,7 @@ function DashboardView({ user }) {
                       >
                         <Card
                           className={classes.card}
-                          onClick={() => navigateTo(module.path)}
+                          onClick={() => navigate(module.path)}
                           style={{ backgroundColor: module.backgroundColor }}
                         >
                           <CardContent className={classes.cardContent}>
