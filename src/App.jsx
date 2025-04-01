@@ -13,7 +13,7 @@ import LoginContainer from "./containers/LoginContainer";
 import DashboardContainer from "./containers/DashboardContainer";
 import RegisterContainer from "./containers/RegisterContainer";
 import PasswordResetContainer from "./containers/PasswordResetContainer";
-
+import ToDoContainer from "./containers/ToDoDashboardContainer";
 function App() {
   const user = useSelector(getUserSelector);
 
@@ -37,6 +37,14 @@ function App() {
           element={
             <ProtectedRoute>
               <DashboardContainer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/todo"
+          element={
+            <ProtectedRoute>
+              <ToDoContainer />
             </ProtectedRoute>
           }
         />
